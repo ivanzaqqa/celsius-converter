@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')
+	</script>
+
+		<title>Celsius Converter</title>
+	</head>
+<body>
+	<center>
+			<p id="welcome">~{Welcome to Celsius Converter}~</p>
+
+			<h1>Celsius (°C) to Kelvin (K)</h1>
+
+			<form role="form">
+			<input type="text" name="temperature" id="kelvin" placeholder="Input Temperature" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+			<input type="button" value="Send" onclick="convcel()">
+			<input type="reset" name="reset">
+			</form><br>
+
+			<div id="result"></div>
+
+			<h1 style="margin-top: 80px;">What do you want to convert?</h1>
+
+			<a href="/fahrenhait" style="margin-right: 20px;">Celsius to Fahrenhait</a>
+			<a href="/kelvin">Celsius to Kelvin</a>
+			<a href="/reaumur" style="margin-left: 20px;">Celsius to Reaumur</a><br>
+			<a href="/" style="margin-left: 20px; margin-top: 20px; background-color: purple;">Home</a>
+	</center>
+</body>
+</html>
+
+<script>
+	function convcel() {
+		var result = $("#kelvin").val()
+		var data = {
+			"temperature": parseInt(result)
+		}
+		$.ajax({
+			url:"/kelvin",
+			contentType:"application/json",
+			data: JSON.stringify(data),
+			method: "POST",
+			success: function(response) {
+				$("#result").append(`<div>${response.Result}</div>`)
+				console.log(response)
+			},
+			error: function(error){
+				alert(error)
+			}
+		})
+	}
+</script>
+
+<style>
+	p {
+		font-family: "Times New Roman", Times, serif;
+		font-style: bold;
+		font-size: 40px;
+	}
+
+	input[type=text] {
+    background-color: grey;
+    color: white;
+    border: 2px solid black;
+    border-radius: 4px;
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+	}
+
+	::-webkit-input-placeholder {
+	color: #BDBDBD !important;
+	}
+
+	input[type=button], input[type=submit], input[type=reset] {
+    background-color: #000000;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+	}
+
+	a:link, a:visited {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 25px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+	}
+
+	body {
+    background-image: url("http://www.lyhyxx.com/data/out/18/3890816-white-wallpapers.png");
+	}
+
+	div {
+		font-family: system-ui;
+	}
+</style>
