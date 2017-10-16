@@ -7,8 +7,7 @@ class ConvcelController():
 	def getFahrenhait(request):
 		result = request.json['temperature']
 		fahrenhait = result + 32
-		response = {}
-		response["result"] = fahrenhait
+		response = { "Result" : fahrenhait}
 		return jsonify(response)
 
 	def getKelvin(request):
